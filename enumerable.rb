@@ -18,4 +18,26 @@ module Enumerable
     self.my_each { |item| result << item if yield(item) }
     result
   end
+  
+  def my_all?
+    if block_given?
+      self.my_each { |item| return false unless yield(item) }
+    else
+      self.my_each { |item| return false unless item }
+    end
+    true
+  end
+  
+  def my_any?
+    if block_given?
+      self.my_each { |item| return true if yield(item) }
+    else
+      self.my_each { |item| return true if item }
+    end
+    false
+  end
+  
+  def my_none?(&block)
+    !self.my_any?(&block)
+  end
 end
