@@ -20,13 +20,13 @@ module Enumerable
   end
   
   def my_all?
-    return self.my_all? { |item| item } if !block_given?
+    return self.my_all? { |item| item } unless block_given?
     self.my_each { |item| return false unless yield(item) }
     true
   end
   
   def my_any?
-    return self.my_any? { |item| item } if !block_given?
+    return self.my_any? { |item| item } unless block_given?
     self.my_each { |item| return true if yield(item) }
     false
   end
@@ -36,7 +36,7 @@ module Enumerable
   end
   
   def my_count(value = omitted = true)
-    if !block_given?
+    unless block_given?
       return self.my_count { true } if omitted
       return self.my_count { |item| item == value }
     end
@@ -47,10 +47,10 @@ module Enumerable
   
   def my_map(proc = omitted = true)
     result = []
-    if !omitted
-      self.my_each { |item| result << proc.call(item) }
-    else
+    if omitted
       self.my_each { |item| result << yield(item) }
+    else
+      self.my_each { |item| result << proc.call(item) }
     end
     result
   end

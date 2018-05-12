@@ -11,11 +11,8 @@ def caesar_cipher(message, shift)
     else
       max = 200
     end
-    
-    if c > max
-      c -= 26
-    end
-    
+
+    c -= 26 if c > max
     return_message += c.chr
   end
   return_message
