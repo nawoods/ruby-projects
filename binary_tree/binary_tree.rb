@@ -26,14 +26,26 @@ class BinaryTree
     end
   end
   
+  def breadth_first_search(value)
+    queue = [@root]
+    until queue.length == 0
+      return queue.first if queue.first.value == value
+      queue.push(queue.first.left_child) if queue.first.left_child
+      queue.push(queue.first.right_child) if queue.first.right_child
+      queue.shift
+    end
+    return nil
+  end
+  
   def to_s
     queue = [[@root, 0]]
     until queue.length == 0
-      node = queue[0][0]
-      level = queue[0][1]
-      puts "#{node.value}, #{level}"
+      node = queue.first.first
+      level = queue.first.last
+      puts "#{node.value}, #{level} (children: #{node.left_child.value},"\
+        "#{node.right_child.value})"
       puts "(parent: #{node.parent.value})" if node.parent
-      if queue[0]
+      if queue.first
         queue.push([node.left_child, level + 1]) if node.left_child
         queue.push([node.right_child, level + 1]) if node.right_child
       end
