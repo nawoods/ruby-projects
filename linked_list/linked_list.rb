@@ -93,34 +93,29 @@ class LinkedList
   end
   
   def insert_at(node, index)
-    pointer = @head
     if index == 0
-      node.next_node = pointer
+      node.next_node = @head
       @head = node
       return true
     end
-    (index-1).times do
-      return false if pointer.nil?
-      pointer = pointer.next_node
-    end
-    node.next_node = pointer.next_node
-    pointer.next_node = node
+    prev = at(index-1)
+    return false if prev.nil?
+    node.next_node = prev.next_node
+    prev.next_node = node
     true
   end
   
   def remove_at(index)
     return nil if @head.nil?
-    pointer = @head
     if index == 0
+      removed = @head
       @head = @head.next_node
-      return pointer
+      return removed
     end
-    (index-1).times do
-      return if pointer.next_node.nil?
-      pointer = pointer.next_node
-    end
-    result = pointer.next_node
-    pointer.next_node = pointer.next_node.next_node
-    result
+    prev = at(index-1)
+    return if prev.nil?
+    removed = prev.next_node
+    prev.next_node = prev.next_node.next_node
+    removed
   end
 end
