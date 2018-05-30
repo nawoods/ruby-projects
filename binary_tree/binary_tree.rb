@@ -49,6 +49,18 @@ class BinaryTree
     return nil
   end
   
+  # recursive preorder search
+  def dfs_rec(value)
+    return nil if root.nil?
+    return root if root.value == value
+    
+    left_search = BinaryTree.new(root.left_child).dfs_rec(value)
+    return left_search if left_search
+    right_search = BinaryTree.new(root.right_child).dfs_rec(value)
+    return right_search if right_search
+    nil
+  end
+  
   def to_s
     return "it's empty" if root.nil?
     result = ""
