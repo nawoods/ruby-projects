@@ -6,7 +6,22 @@ class KnightGraph
     create_edges
   end
   
-  def knight_moves
+  def knight_moves(start_point, end_point)
+    possible_answers = [[start_point]]
+    loop do
+      new_possible_answers = []
+      possible_answers.each do |prev_answer|
+        possible_moves = edges.select { |edge| edge.include? prev_answer.last }
+        possible_moves.each do |move|
+          new_square = (move - [prev_answer.last])
+          new_answer = prev_answer + new_square
+          return new_answer if new_square.flatten == end_point
+          new_possible_answers << new_answer if new_answer == new_answer.uniq
+        end
+      end
+      possible_answers = new_possible_answers
+      return "bluh" if possible_answers == []
+    end
   end
   
   private
