@@ -17,8 +17,3 @@ def caesar_cipher(message, shift)
   end
   return_message
 end
-
-puts caesar_cipher("Hello there!", 13)
-puts caesar_cipher("Uryyb gurer!", 13)
-puts caesar_cipher("~*~*good*~*~", 28)
-puts caesar_cipher("~*~*iqqf*~*~", -28)
