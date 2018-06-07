@@ -3,9 +3,31 @@ require "./enumerable"
 describe Enumerable do
   let(:letters) { ["a", "b", "c", "d", "e"] }
   let(:albums) { { "Fakebook" => 1990, "Painful" => 1993, "Fade" => 2013 } }
+  let(:albums_upcase) { ["FAKEBOOK", "PAINFUL", "FADE"] }
+  let(:empty_array) { [] }
+  
+  describe "#my_each" do
+    it "returns self" do
+      expect(letters.my_each { |i| i.upcase }).to eq(letters)
+    end
+    
+    it "does nothing if array is empty" do
+      [].my_each { |i| empty_array << i }
+      expect(empty_array).to eq([])
+    end
+    
+    it "loops through an array" do
+      letters.my_each { |i| empty_array << i }
+      expect(empty_array).to eq(letters)
+    end
+    
+    it "works with hashes" do
+      albums.my_each { |k, v| empty_array << k.upcase }
+      expect(empty_array).to eq(albums_upcase)
+    end
+  end
 
   describe "#my_select" do
-    
     it "processes an empty array" do
       expect([].my_select { |i| true }).to eq([])
     end
@@ -77,8 +99,11 @@ describe Enumerable do
     end
     
     it "works with hashes" do
-      expect(albums.my_map { |k, v| k.upcase })
-          .to eq(["FAKEBOOK", "PAINFUL", "FADE"])
+      expect(albums.my_map { |k, v| k.upcase }).to eq(albums_upcase)
+    end
+    
+    it "works with procs" do
+      expect(albums.my_map Proc.new { |k, v| k.upcase }).to eq(albums_upcase)
     end
   end
   
